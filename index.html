@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genetics Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-image: url('YOUR_GOOGLE_DRIVE_IMAGE_URL'); /* เปลี่ยน URL เป็น URL ของภาพจาก Google Drive */
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 20px;
+            height: 100vh;
+            color: white; /* สีตัวอักษรให้เหมาะกับพื้นหลัง */
+        }
+
+        h2 {
+            color: #4CAF50;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 10px 20px;
+            z-index: 10;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin-right: 20px;
+            font-weight: bold;
+            background-color: #4CAF50;
+            border-radius: 5px;
+        }
+
+        .navbar a:hover {
+            background-color: #45a049;
+        }
+
+        label, select, button {
+            margin: 5px;
+            font-size: 1.2rem;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.1rem;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #results {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .back-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<!-- แถบเมนูด้านบน -->
+<div class="navbar">
+    <a href="YOUR_PAGE_URL_1" target="_blank">หน้าหลัก</a>
+    <a href="YOUR_PAGE_URL_2" target="_blank">คำแนะนำ</a>
+    <a href="YOUR_PAGE_URL_3" target="_blank">ติดต่อ</a>
+</div>
+
+<!-- ปุ่มย้อนกลับ -->
+<button class="back-btn" onclick="window.history.back();">ย้อนกลับ</button>
+
+<h2>Genetics-Calculator</h2>
+
+<!-- ฟอร์มสำหรับใส่ข้อมูลอัลลีลของพ่อและแม่ -->
+<label for="parent1">Parent 1 Allele:</label>
+<select id="parent1">
+    <option value="A">A</option>
+    <option value="a">a</option>
+</select>
+
+<label for="parent2">Parent 1 Allele:</label>
+<select id="parent2">
+    <option value="A">A</option>
+    <option value="a">a</option>
+</select>
+
+<br><br>
+
+<label for="parent3">Parent 2 Allele:</label>
+<select id="parent3">
+    <option value="A">A</option>
+    <option value="a">a</option>
+</select>
+
+<label for="parent4">Parent 2 Allele:</label>
+<select id="parent4">
+    <option value="A">A</option>
+    <option value="a">a</option>
+</select>
+
+<br><br>
+
+<button onclick="calculateGenetics()">Calculate</button>
+
+<h3>Results:</h3>
+<p id="results"></p>
+
+<script>
+function calculateGenetics() {
+    // รับค่าจากฟอร์ม
+    let p1 = document.getElementById("parent1").value;
+    let p2 = document.getElementById("parent2").value;
+    let p3 = document.getElementById("parent3").value;
+    let p4 = document.getElementById("parent4").value;
+
+    // กำหนดคู่ที่เป็นไปได้
+    let possibleCombinations = [p1 + p3, p1 + p4, p2 + p3, p2 + p4];
+
+    // นับจำนวนของ AA, Aa, และ aa
+    let counts = {
+        "AA": 0,
+        "Aa": 0,
+        "aA": 0,
+        "aa": 0
+    };
+
+    possibleCombinations.forEach(combination => {
+        counts[combination]++;
+    });
+
+    // คำนวณเปอร์เซ็นต์ของแต่ละลักษณะ
+    let total = possibleCombinations.length;
+    let AA_percent = (counts["AA"] / total) * 100;
+    let Aa_percent = ((counts["Aa"] + counts["aA"]) / total) * 100;
+    let aa_percent = (counts["aa"] / total) * 100;
+
+    // แสดงผลลัพธ์
+    document.getElementById("results").innerHTML =
+        `AA: ${AA_percent.toFixed(2)}%<br>` +
+        `Aa: ${Aa_percent.toFixed(2)}%<br>` +
+        `aa: ${aa_percent.toFixed(2)}%`;
+}
+</script>
+
+</body>
+</html>
